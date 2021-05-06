@@ -14,17 +14,17 @@
     comment: "Nexus user service"
     expires: -1
 
-# - name: Nexus | Descragar instalador del nexus
-  # get_url:
-    # url: "{{ nexus_url }}/{{ nexus_tar_file }}"
-    # dest: "/tmp/"
-
 - name: Nexus | Copy the zip file to the remote server and unzip it
   unarchive:
     src: "{{ pkg_location | default('files') }}/{{ nexus_tar_file }}"
     dest: "{{ install_location }}"
     owner: "{{ nexus_system_user }}"
     group: "{{ nexus_system_user }}"
+
+# - name: Nexus | Descragar instalador del nexus
+    # get_url:
+    # url: "{{ nexus_url }}/{{ nexus_tar_file }}"
+    # dest: "/tmp/"
 
 # - name: Nexus | Descomprimer el instalador del nexus
   # unarchive:
@@ -39,10 +39,9 @@
 
 - name: Nexus | Crear servicio nexus.service
   template:
-    src: "template/{{ nexus_service_template }}.j2"
+    src: "templates/{{ nexus_service_template }}.j2"
     dest: "/etc/systemd/system/{{ nexus_service_template }}"
-    mode: 0755
-    notify:
+  notify:
     - reload systemd
 
 - name: Nexus | Configure firewall
@@ -54,7 +53,7 @@
   loop: "{{ nexus_firewall_ports }}"
   notify:
     - restart firewall
-    - disable selinux
+    - set selinux
 
 - name: configurar el nexus properties para levantar en la ip del servidor
   ini_file:
@@ -64,3 +63,5 @@
     no_extra_spaces: yes
     state: present
     section: null
+  notify:
+    - start service
