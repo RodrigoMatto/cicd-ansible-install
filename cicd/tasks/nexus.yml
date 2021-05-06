@@ -23,8 +23,8 @@
   unarchive:
     src: "{{ pkg_location | default('files') }}/{{ nexus_tar_file }}"
     dest: "{{ install_location }}"
-    owner: "{{ system_user }}"
-    group: "{{ system_user }}"
+    owner: "{{ nexus_system_user }}"
+    group: "{{ nexus_system_user }}"
 
 # - name: Nexus | Descomprimer el instalador del nexus
   # unarchive:
