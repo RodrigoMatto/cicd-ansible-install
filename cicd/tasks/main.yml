@@ -11,8 +11,8 @@
 #   Nexus
 - name: Nexus | Add specific variables
   include_vars: "nexus.yml"
-  when: nexus_install && inventory_hostname == nexus_server
+  when: nexus_install and inventory_hostname in nexus_server
 
 - name: Nexus | Add Nexus tasks
   include_tasks: "nexus.yml"
-  when: nexus_install && inventory_hostname == nexus_server
+  when: nexus_install and inventory_hostname in nexus_server

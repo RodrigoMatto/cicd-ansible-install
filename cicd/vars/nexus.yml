@@ -6,7 +6,7 @@ nexus_firewall_ports:
   - {port: '8081/tcp', state: 'enabled'}
 nexus_system_user: 'nexus'
 nexus_service_template: 'nexus.service'
-nexus_url: 'http://download.sonatype.com/nexus/3'
 nexus_tar_file: 'nexus-3.30.1-01-unix.tar.gz'
 nexus_home_directory: /opt/nexus-3.30.1-01
+nexus_sonatype_directory: /opt/sonatype-work
 service_name: nexus

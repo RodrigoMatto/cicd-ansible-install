@@ -22,7 +22,7 @@
     group: "{{ nexus_system_user }}"
 
 - name: Nexus | verificacion de permisos
-  shell: "chown -R {{ nexus_system_user }}:{{ nexus_system_user }} {{ nexus_home_directory }} sonatype-work/"
+  shell: "chown -R {{ nexus_system_user }}:{{ nexus_system_user }} {{ nexus_home_directory }} {{ nexus_sonatype_directory }}"
 
 - name: Nexus | Crear servicio nexus.service
   template:
