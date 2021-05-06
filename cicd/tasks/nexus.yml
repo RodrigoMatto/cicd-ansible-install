@@ -42,7 +42,7 @@
     - restart firewall
     - set selinux
 
-- name: configurar el nexus properties para levantar en la ip del servidor
+- name: Nexus | Configurar el nexus properties para levantar en la ip del servidor
   ini_file:
     path: "{{ nexus_home_directory }}/etc/nexus-default.properties"
     option: application-host
