@@ -1,0 +1,8 @@
+---
+- hosts: all
+  vars:
+      nexus_install: true
+      nexus_server: nexus.server
+  roles:
+    - role: cicd
+...

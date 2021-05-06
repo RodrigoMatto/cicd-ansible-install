@@ -1,0 +1,5 @@
+---
+# defaults file for cicd
+
+# Installation
+install_location: "/opt/"

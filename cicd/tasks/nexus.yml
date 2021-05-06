@@ -1,0 +1,59 @@
+---
+- name: Nexus | Instalar dependencias
+  package:
+    name: "{{ item.package }}"
+    state: "{{ item.state }}"
+  loop: "{{ nexus_package }}"
+
+- name: Nexus | Add a System user that runs the Nexus process
+  user:
+    name: "{{ nexus_system_user }}"
+    system: yes
+    create_home: no
+    shell: /usr/sbin/nologin
+    comment: "Nexus user service"
+    expires: -1
+
+- name: Nexus | Descragar instalador del nexus
+  get_url:
+    url: "{{ nexus_url }}/{{ nexus_tar_file }}"
+    dest: "/tmp/"
+
+- name: Nexus | Descomprimer el instalador del nexus
+  unarchive:
+    src: "/tmp/{{ nexus_tar_file }}"
+    dest: "{{ install_location }}"
+    owner: "{{ nexus_system_user }}"
+    group: "{{ nexus_system_user }}"
+    remote_src: yes
+
+- name: Nexus | verificacion de permisos
+    shell: "chown -R {{ nexus_system_user }}:{{ nexus_system_user }} {{ nexus_home_directory }}"
+
+- name: Nexus | Crear servicio nexus.service
+  template:
+    src: "template/{{ nexus_service_template }}.j2"
+    dest: "/etc/systemd/system/{{ nexus_service_template }}"
+    mode: 0755
+    notify:
+    - reload systemd
+
+- name: Nexus | Configure firewall
+  firewalld:
+    port: "{{ item.port }}"
+    permanent: yes
+    immediate: yes
+    state: "{{ item.state }}"
+  loop: "{{ nexus_firewall_ports }}"
+  notify:
+    - restart firewall
+    - disable selinux
+
+- name: configurar el nexus properties para levantar en la ip del servidor
+  ini_file:
+    path: "{{ nexus_home_directory }}/etc/nexus-default.properties"
+    option: application-host
+    value: "{{ ansible_default_ipv4.address }}"
+    no_extra_spaces: yes
+    state: present
+    section: null
