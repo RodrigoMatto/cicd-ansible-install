@@ -21,21 +21,8 @@
     owner: "{{ nexus_system_user }}"
     group: "{{ nexus_system_user }}"
 
-# - name: Nexus | Descragar instalador del nexus
-    # get_url:
-    # url: "{{ nexus_url }}/{{ nexus_tar_file }}"
-    # dest: "/tmp/"
-
-# - name: Nexus | Descomprimer el instalador del nexus
-  # unarchive:
-    # src: "/tmp/{{ nexus_tar_file }}"
-    # dest: "{{ install_location }}"
-    # owner: "{{ nexus_system_user }}"
-    # group: "{{ nexus_system_user }}"
-  # remote_src: yes
-
 - name: Nexus | verificacion de permisos
-    shell: "chown -R {{ nexus_system_user }}:{{ nexus_system_user }} {{ nexus_home_directory }}"
+  shell: "chown -R {{ nexus_system_user }}:{{ nexus_system_user }} {{ nexus_home_directory }} sonatype-work/"
 
 - name: Nexus | Crear servicio nexus.service
   template:
