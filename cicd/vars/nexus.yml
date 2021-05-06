@@ -10,3 +10,7 @@ nexus_tar_file: 'nexus-3.30.1-01-unix.tar.gz'
 nexus_home_directory: /opt/nexus-3.30.1-01
 nexus_sonatype_directory: /opt/sonatype-work
 service_name: nexus
+nexus_tuning_jvm:
+  - {path: '{{ nexus_home_directory }}/bin/nexus.vmoptions', regexp: '-Xms2703m', line: '-Xms1'}
+  - {path: '{{ nexus_home_directory }}/bin/nexus.vmoptions', regexp: '-Xmx2703m', line: '-Xmx2'}
+  - {path: '{{ nexus_home_directory }}/bin/nexus.vmoptions', regexp: '-XX:MaxDirectMemorySize=2703m', line: '-XX:MaxDirectMemorySize=3'}
