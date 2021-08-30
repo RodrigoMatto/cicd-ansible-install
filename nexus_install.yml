@@ -1,8 +1,9 @@
 ---
-- hosts: all
+- hosts: nexus
   vars:
       nexus_install: true
-      nexus_server: nexus.server
+      nexus_server: nexus.test.data
+      nexus_version: 3.33.1-01
   roles:
     - role: cicd
 ...

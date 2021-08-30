@@ -3,3 +3,9 @@
 
 # Installation
 install_location: "/opt/"
+
+
+nexus_version: '3.33.1-01'
+nexus_tar_file: 'nexus-{{ nexus_version }}.tar.gz'
+nexus_home_directory: /opt/nexus-{{ nexus_version }}
+nexus_sonatype_directory: /opt/sonatype-work
